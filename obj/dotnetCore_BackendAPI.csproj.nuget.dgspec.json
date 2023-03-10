@@ -44,6 +44,26 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Betalgo.OpenAI.GPT3": {
+              "target": "Package",
+              "version": "[6.7.2, )"
+            },
+            "LineBotSDK": {
+              "target": "Package",
+              "version": "[2.10.37, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "StartFMS.Extensions.Data": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"

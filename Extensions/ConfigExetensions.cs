@@ -28,8 +28,6 @@
                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                           .AddUserSecrets(assembly, optional: false)
                           .Build();
-            Console.WriteLine(config["Test"]);
-
             return config;
         }
 
