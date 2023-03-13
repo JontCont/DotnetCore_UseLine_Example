@@ -34,7 +34,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("Config")]
     public string GetConfig(string name) {
         try {
-            string? config = Config.GetConfiguration().GetValue<string>("name");
+            string? config = Config.GetConfiguration().GetValue<string>(name);
             return $"{name} : {config}";
         }catch (Exception ex) {
             return $"Error : {ex.Message}";
