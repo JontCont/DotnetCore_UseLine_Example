@@ -19,14 +19,14 @@
         /// <returns></returns>
         public static IConfiguration GetConfiguration()
         {
-            var assembly = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Single(o => o.EntryPoint != null);
+            //var assembly = AppDomain.CurrentDomain
+            //    .GetAssemblies()
+            //    .Single(o => o.EntryPoint != null);
 
             IConfiguration config = new ConfigurationBuilder()
                           .SetBasePath(Directory.GetCurrentDirectory())
                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddUserSecrets(assembly, optional: false)
+                          //.AddUserSecrets(assembly, optional: false)
                           .Build();
             return config;
         }
