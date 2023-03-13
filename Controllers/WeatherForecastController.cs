@@ -42,4 +42,15 @@ public class WeatherForecastController : ControllerBase
 
     }
 
+    [HttpGet("DBConfig")]
+    public string GetDBConfig() {
+        try {
+            string? config = Config.GetConfiguration().GetValue<string>("ConnectionStrings:Default");
+            return $"ConnectionStrings : {config}";
+        }
+        catch (Exception ex) {
+            return $"Error : {ex.Message}";
+        }
+
+    }
 }
