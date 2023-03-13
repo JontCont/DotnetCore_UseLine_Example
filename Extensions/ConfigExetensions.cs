@@ -20,15 +20,10 @@ namespace start5M.Line.WebAPI.Extensions
         /// </summary>
         /// <returns></returns>
         public static IConfiguration GetConfiguration() {
-            var assembly = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Single(o => o.EntryPoint != null);
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddUserSecrets(assembly, optional: false);
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             // 取得 Azure App Configuration 的連線字串
             var connectionString = builder.Build()["ConnectionStrings:AppConfig"];
