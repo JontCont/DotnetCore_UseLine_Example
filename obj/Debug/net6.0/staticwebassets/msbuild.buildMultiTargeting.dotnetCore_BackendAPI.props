@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\dotnetCore_BackendAPI.props" />
-</Project>
