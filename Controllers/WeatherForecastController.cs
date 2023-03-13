@@ -33,9 +33,13 @@ public class WeatherForecastController : ControllerBase
 
     [HttpGet("Config")]
     public string GetConfig() {
-        string? config = Config.GetConfiguration().GetValue<string>("OpenAIServiceOptions:Organization");
+        try {
+            string? config = Config.GetConfiguration().GetValue<string>("OpenAIServiceOptions:Organization");
+            return $"Organization : {config}";
+        }catch (Exception ex) {
+            return $"Error : {ex.Message}";
+        }
 
-        return $"Organization : {config}";
     }
 
 }
