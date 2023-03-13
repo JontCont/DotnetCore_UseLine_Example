@@ -32,10 +32,10 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet("Config")]
-    public string GetConfig() {
+    public string GetConfig(string name) {
         try {
-            string? config = Config.GetConfiguration().GetValue<string>("OpenAIServiceOptions:Organization");
-            return $"Organization : {config}";
+            string? config = Config.GetConfiguration().GetValue<string>("name");
+            return $"{name} : {config}";
         }catch (Exception ex) {
             return $"Error : {ex.Message}";
         }
@@ -45,6 +45,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("DBConfig")]
     public string GetDBConfig() {
         try {
+            var demo = Config.GetConfiguration();
             string? config = Config.GetConfiguration().GetValue<string>("ConnectionStrings:Default");
             return $"ConnectionStrings : {config}";
         }
