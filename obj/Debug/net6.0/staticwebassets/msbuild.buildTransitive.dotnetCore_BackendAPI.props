@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\dotnetCore_BackendAPI.props" />
-</Project>
