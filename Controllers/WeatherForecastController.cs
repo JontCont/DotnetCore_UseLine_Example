@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using start5M.Line.WebAPI.Extensions;
 
 namespace dotnetCore_BackendAPI.Controllers;
 
@@ -29,4 +30,12 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
     }
+
+    [HttpGet("Config")]
+    public string GetConfig() {
+        string? config = Config.GetConfiguration().GetValue<string>("OpenAIServiceOptions:Organization");
+
+        return $"Organization : {config}";
+    }
+
 }
