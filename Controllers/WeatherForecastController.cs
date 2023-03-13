@@ -45,7 +45,6 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("DBConfig")]
     public string GetDBConfig() {
         try {
-            var demo = Config.GetConfiguration();
             string? config = Config.GetConfiguration().GetValue<string>("ConnectionStrings:Default");
             return $"ConnectionStrings : {config}";
         }
