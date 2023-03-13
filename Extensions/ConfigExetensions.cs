@@ -1,4 +1,6 @@
-﻿namespace start5M.Line.WebAPI.Extensions
+﻿using Azure.Identity;
+
+namespace start5M.Line.WebAPI.Extensions
 {
     public static class Config
     {
@@ -17,18 +19,27 @@
         /// 取用  appsettings.json 資料
         /// </summary>
         /// <returns></returns>
-        public static IConfiguration GetConfiguration()
-        {
-            var assembly = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Single(o => o.EntryPoint != null);
+        public static IConfiguration GetConfiguration() {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddEnvironmentVariables()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            IConfiguration config = new ConfigurationBuilder()
-                          .SetBasePath(Directory.GetCurrentDirectory())
-                          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddUserSecrets(assembly, optional: false)
-                          .Build();
-            return config;
+            // 取得 Azure App Configuration 的連線字串
+            var connectionString = builder.Build()["ConnectionStrings:AppConfig"];
+
+            // 加入 Azure App Configuration 資料源
+            builder.AddAzureAppConfiguration(options =>
+            {
+                options.Connect(connectionString)
+                    // 如果您想要只加載指定的鍵，可以使用 Select 方法，例如：
+                    //.Select(KeyFilter.AnyOf("MyApp:*"))
+                    .ConfigureKeyVault(kv => {
+                        kv.SetCredential(new DefaultAzureCredential());
+                    });
+            });
+            
+            return builder.Build();
         }
 
     }
