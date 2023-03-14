@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace start5M.Line.WebAPI.Extensions
+namespace StartFMS_BackendAPI.Line.WebAPI.Extensions
 {
     public class CookieAuthenticationEventsExetensions : CookieAuthenticationEvents
     {

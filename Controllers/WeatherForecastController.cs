@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using start5M.Line.WebAPI.Extensions;
+using StartFMS_BackendAPI.Line.WebAPI.Extensions;
 
-namespace dotnetCore_BackendAPI.Controllers;
+namespace StartFMS_BackendAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -43,11 +43,10 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet("DBConfig")]
-    public string GetDBConfig() {
+    public string GetDBConfig(string name) {
         try {
-            var demo = Config.GetConfiguration();
-            string? config = Config.GetConfiguration().GetValue<string>("ConnectionStrings:Default");
-            return $"ConnectionStrings : {config}";
+            string? config = Config.GetConnectionString(name);
+            return $"{name} : {config}";
         }
         catch (Exception ex) {
             return $"Error : {ex.Message}";

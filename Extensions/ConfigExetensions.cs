@@ -1,6 +1,6 @@
 ﻿using Azure.Identity;
 
-namespace start5M.Line.WebAPI.Extensions
+namespace StartFMS_BackendAPI.Line.WebAPI.Extensions
 {
     public static class Config
     {
@@ -16,29 +16,31 @@ namespace start5M.Line.WebAPI.Extensions
         }
 
         /// <summary>
-        /// 取用  appsettings.json 資料
+        /// 取用Config設定檔資料
         /// </summary>
         /// <returns></returns>
         public static IConfiguration GetConfiguration() {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddUserSecrets<Program>()
+                .AddEnvironmentVariables();
 
             // 取得 Azure App Configuration 的連線字串
             var connectionString = builder.Build()["ConnectionStrings:AppConfig"];
 
-            // 加入 Azure App Configuration 資料源
-            builder.AddAzureAppConfiguration(options =>
-            {
-                options.Connect(connectionString)
-                    // 如果您想要只加載指定的鍵，可以使用 Select 方法，例如：
-                    //.Select(KeyFilter.AnyOf("MyApp:*"))
-                    .ConfigureKeyVault(kv => {
-                        kv.SetCredential(new DefaultAzureCredential());
-                    });
-            });
-            
+            if(connectionString != null) {
+                // 加入 Azure App Configuration 資料源
+                builder.AddAzureAppConfiguration(options =>
+                {
+                    options.Connect(connectionString)
+                        // 如果您想要只加載指定的鍵，可以使用 Select 方法，例如：
+                        //.Select(KeyFilter.AnyOf("MyApp:*"))
+                        .ConfigureKeyVault(kv => {
+                            kv.SetCredential(new DefaultAzureCredential());
+                        });
+                });
+            }
             return builder.Build();
         }
 

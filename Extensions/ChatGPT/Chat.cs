@@ -3,7 +3,7 @@ using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3;
 
-namespace start5M.Line.WebAPI.Extensions.ChatGPT {
+namespace StartFMS_BackendAPI.Line.WebAPI.Extensions.ChatGPT {
     public static class Chat {
 
         public static async Task<string> ResponseMessageAsync(string Prompt) {
