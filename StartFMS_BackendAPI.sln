@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33417.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCore_BackendAPI", "dotnetCore_BackendAPI.csproj", "{E844CB37-3CA5-4D81-AE59-CED62625B002}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartFMS_BackendAPI", "StartFMS_BackendAPI.csproj", "{AB09EF12-9ADB-4DBE-BC00-CD66D06C8A8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E844CB37-3CA5-4D81-AE59-CED62625B002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E844CB37-3CA5-4D81-AE59-CED62625B002}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E844CB37-3CA5-4D81-AE59-CED62625B002}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E844CB37-3CA5-4D81-AE59-CED62625B002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB09EF12-9ADB-4DBE-BC00-CD66D06C8A8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB09EF12-9ADB-4DBE-BC00-CD66D06C8A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB09EF12-9ADB-4DBE-BC00-CD66D06C8A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB09EF12-9ADB-4DBE-BC00-CD66D06C8A8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CBF2274E-A88A-46E3-A013-4E1362BF9D6F}
+		SolutionGuid = {C4901699-274E-4CA5-8325-B362088877C2}
 	EndGlobalSection
 EndGlobal

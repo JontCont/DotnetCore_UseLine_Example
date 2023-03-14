@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using StartFMS_BackendAPI.Line.WebAPI.Extensions.LineBots;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var config = Config.GetConfiguration(); //加入設定檔
 builder.Configuration.AddUserSecrets<Program>();
 // Add services to the container.
 
@@ -37,7 +37,7 @@ builder.Services
 
             // 一般我們都會驗證 Issuer
             ValidateIssuer = true,
-            ValidIssuer = Config.GetConfiguration().GetValue<string>("JwtSettings:Issuer"),
+            ValidIssuer = config.GetValue<string>("JwtSettings:Issuer"),
 
             // 通常不太需要驗證 Audience
             ValidateAudience = false,
@@ -73,8 +73,8 @@ builder.Services
 
 
 var lineBots = new LineBots() {
-    ChannelToken = Config.GetConfiguration().GetValue<string>("Line:Bots:channelToken"),
-    AdminUserID = Config.GetConfiguration().GetValue<string>("Line:Bots:adminUserID")
+    ChannelToken = config.GetValue<string>("Line:Bots:channelToken"),
+    AdminUserID = config.GetValue<string>("Line:Bots:adminUserID")
 };
 builder.Services.AddTransient<LineBots>();
 
