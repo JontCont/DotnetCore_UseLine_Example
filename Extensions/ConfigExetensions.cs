@@ -1,6 +1,6 @@
 ﻿using Azure.Identity;
 
-namespace start5M.Line.WebAPI.Extensions
+namespace StartFMS_BackendAPI.Line.WebAPI.Extensions
 {
     public static class Config
     {
@@ -16,7 +16,7 @@ namespace start5M.Line.WebAPI.Extensions
         }
 
         /// <summary>
-        /// 取用  appsettings.json 資料
+        /// 取用Config設定檔資料
         /// </summary>
         /// <returns></returns>
         public static IConfiguration GetConfiguration() {

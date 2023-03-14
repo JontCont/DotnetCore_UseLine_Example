@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using start5M.Line.WebAPI.Extensions;
+using StartFMS_BackendAPI.Line.WebAPI.Extensions;
 using OpenAI.GPT3.Extensions;
 using Microsoft.AspNetCore.Hosting;
+using StartFMS_BackendAPI.Line.WebAPI.Extensions.LineBots;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,11 +65,19 @@ builder.Services
         };
     })
     .AddCookie(options => {
-        options.EventsType = typeof(start5M.Line.WebAPI.Extensions.CookieAuthenticationEventsExetensions);
+        options.EventsType = typeof(StartFMS_BackendAPI.Line.WebAPI.Extensions.CookieAuthenticationEventsExetensions);
         options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
         options.Cookie.Name = "user-session";
         options.SlidingExpiration = true;
     });
+
+
+var lineBots = new LineBots() {
+    ChannelToken = Config.GetConfiguration().GetValue<string>("Line:Bots:channelToken"),
+    AdminUserID = Config.GetConfiguration().GetValue<string>("Line:Bots:adminUserID")
+};
+builder.Services.AddTransient<LineBots>();
+
 
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "METAiM_dotnetCore_api", Version = "v1" });

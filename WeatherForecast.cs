@@ -1,4 +1,4 @@
-namespace dotnetCore_BackendAPI;
+namespace StartFMS_BackendAPI;
 
 public class WeatherForecast
 {

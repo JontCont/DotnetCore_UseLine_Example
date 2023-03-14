@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "dotnetCore_BackendAPI": {
+    "StartFMS_BackendAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
