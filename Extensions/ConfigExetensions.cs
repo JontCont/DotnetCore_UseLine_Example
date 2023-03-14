@@ -23,6 +23,7 @@ namespace start5M.Line.WebAPI.Extensions
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddUserSecrets<Program>()
                 .AddEnvironmentVariables();
 
             // 取得 Azure App Configuration 的連線字串
