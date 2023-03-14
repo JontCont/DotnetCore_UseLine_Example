@@ -22,8 +22,8 @@ namespace start5M.Line.WebAPI.Extensions
         public static IConfiguration GetConfiguration() {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
 
             // 取得 Azure App Configuration 的連線字串
             var connectionString = builder.Build()["ConnectionStrings:AppConfig"];
