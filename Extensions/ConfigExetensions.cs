@@ -1,6 +1,6 @@
 ﻿using Azure.Identity;
 
-namespace StartFMS_BackendAPI.Line.WebAPI.Extensions
+namespace StartFMS_BackendAPI.Extensions
 {
     public static class Config
     {
