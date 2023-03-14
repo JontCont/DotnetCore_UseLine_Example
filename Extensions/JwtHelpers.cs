@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using StartFMS.Models.Identity;
 using StartFMS_BackendAPI.Extensions;
-
+namespace StartFMS_BackendAPI.Extensions;
 public class JwtHelpers
 {
     private readonly IConfiguration Configuration;
@@ -45,7 +45,6 @@ public class JwtHelpers
         //claims.Add(new Claim(ClaimTypes.Name, userName));
 
         // TODO: You can define your "roles" to your Claims.
-        claims.Add(new Claim("roles", "Admin"));
         claims.Add(new Claim("roles", "Users"));
 
         var userClaimsIdentity = new ClaimsIdentity(claims);
@@ -66,7 +65,7 @@ public class JwtHelpers
             //IssuedAt = DateTime.Now, // Default is DateTime.Now
             Subject = userClaimsIdentity,
             Expires = DateTime.Now.AddMinutes(expireMinutes),
-            SigningCredentials = signingCredentials
+            SigningCredentials = signingCredentials,
         };
 
         // Generate a JWT securityToken, than get the serialized Token result (string)
@@ -80,10 +79,10 @@ public class JwtHelpers
     /// <summary>
     /// 從 BDP080 取得資料登入 
     /// </summary>
-    /// <param name="userAuths">使用者驗證</param>
+    /// <param name="userAutos">使用者驗證</param>
     /// <param name="expireMinutes">時效</param>
     /// <returns></returns>
-    public string GenerateToken(userAuthenticationJwt userAuths, int expireMinutes = 30)
+    public string GenerateToken(userAuthenticationJwt userAutos, int expireMinutes = 30)
     {
         var issuer = Configuration.GetValue<string>("JwtSettings:Issuer");
         var signKey = Configuration.GetValue<string>("JwtSettings:SignKey");
@@ -92,7 +91,7 @@ public class JwtHelpers
         var claims = new List<Claim>() {
             // In RFC 7519 (Section#4), there are defined 7 built-in Claims, but we mostly use 2 of them.
             //new Claim(JwtRegisteredClaimNames.Iss, issuer),
-            new Claim(JwtRegisteredClaimNames.Sub, userAuths.User),// User.Identity.Name
+            new Claim(JwtRegisteredClaimNames.Sub, userAutos.User),// User.Identity.Name
             //new Claim(JwtRegisteredClaimNames.Aud, "The Audience"),
             //new Claim(JwtRegisteredClaimNames.Exp, DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeSeconds().ToString()),
             //new Claim(JwtRegisteredClaimNames.Nbf, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()), // 必須為數字
@@ -107,10 +106,8 @@ public class JwtHelpers
             // new Claim(ClaimTypes.Name, userName),
 
             // TODO: You can define your "roles" to your Claims.
-            new Claim("roles",  userAuths.User),
-            new Claim("token",  userAuths.Token),
-            new Claim("org",    userAuths.Org),
-            new Claim("system", userAuths.SysCode),
+            new Claim("roles",  userAutos.User),
+            new Claim("token",  userAutos.Token),
         };
 
         var userClaimsIdentity = new ClaimsIdentity(claims);

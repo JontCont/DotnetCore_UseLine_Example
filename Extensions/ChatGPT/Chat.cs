@@ -2,6 +2,7 @@
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3;
+using StartFMS_BackendAPI.Extensions;
 
 namespace StartFMS_BackendAPI.Line.WebAPI.Extensions.ChatGPT {
     public static class Chat {
