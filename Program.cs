@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using StartFMS_BackendAPI.Line.WebAPI.Extensions;
 using OpenAI.GPT3.Extensions;
-using Microsoft.AspNetCore.Hosting;
+using StartFMS.Models;
+using StartFMS_BackendAPI.Extensions;
 using StartFMS_BackendAPI.Line.WebAPI.Extensions.LineBots;
+using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var config = Config.GetConfiguration(); //加入設定檔
@@ -65,22 +66,26 @@ builder.Services
         };
     })
     .AddCookie(options => {
-        options.EventsType = typeof(StartFMS_BackendAPI.Line.WebAPI.Extensions.CookieAuthenticationEventsExetensions);
+        options.EventsType = typeof(CookieAuthenticationEventsExetensions);
         options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
         options.Cookie.Name = "user-session";
         options.SlidingExpiration = true;
     });
 
+var backend = new BackendContext() {
+    ConnectionString = config.GetValue<string>("ConnectionStrings:Default")
+};
+builder.Services.AddSingleton<BackendContext>(backend);
 
 var lineBots = new LineBots() {
     ChannelToken = config.GetValue<string>("Line:Bots:channelToken"),
     AdminUserID = config.GetValue<string>("Line:Bots:adminUserID")
 };
-builder.Services.AddTransient<LineBots>();
+builder.Services.AddSingleton<LineBots>(lineBots);
 
 
 builder.Services.AddSwaggerGen(c => {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "METAiM_dotnetCore_api", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Start Five Minutes Backend API", Version = "v1" });
 });
 
 var app = builder.Build();
