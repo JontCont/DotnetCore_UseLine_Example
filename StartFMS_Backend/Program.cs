@@ -20,6 +20,21 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOpenAIService();
 
+//add core content
+builder.Services.AddCors(options => {
+    options.AddDefaultPolicy(
+        builder => {
+            builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+        });
+
+    options.AddPolicy("AnotherPolicy",
+        builder => {
+            builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+        });
+});
+
 builder.Services
     .AddAuthentication(options => {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
