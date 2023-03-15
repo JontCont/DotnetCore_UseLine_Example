@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using StartFMS.Models;
 using StartFMS.Models.Identity;
@@ -55,6 +56,23 @@ public class IdentityController : Controller {
                 Token = resultToken
             });
     }//PostFormIdentity()
+
+    [HttpGet(Name = "")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public string GetFormIdentity() {
+        UsersAuthorize users = new UsersAuthorize(Request);
+        if (users == null)
+            return JsonConvert.SerializeObject(new JsonResult {
+                Success = false,
+                Error = "403 Forbidden",
+                Message = "驗證身分失敗。"
+            });
+        return (users != null)
+            ? JsonConvert.SerializeObject(new JsonResult { Success = true }, Formatting.None)
+            : JsonConvert.SerializeObject(new JsonResult { Success = false }, Formatting.None);
+    }//GetFormIdentity()
+
+
 
     static bool IsValidEmail(string email) {
         try {
