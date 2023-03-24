@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using StartFMS.Models;
+using StartFMS.Models.Backend;
 using StartFMS.Models.Identity;
 using StartFMS_BackendAPI.Extensions;
 using System.Net.Mail;
@@ -20,11 +20,11 @@ public class JsonResult {
 [Route("[controller]")]
 public class IdentityController : Controller {
     private readonly ILogger<IdentityController> _logger;
-    private readonly BackendContext _context;
+    private readonly A00_BackendContext _context;
 
     public IdentityController(
         ILogger<IdentityController> logger,
-        BackendContext backendContext) {
+        A00_BackendContext backendContext) {
         _logger = logger;
         _context = backendContext;
     }

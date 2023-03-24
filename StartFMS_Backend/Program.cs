@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OpenAI.GPT3.Extensions;
-using StartFMS.Models;
+using StartFMS.Models.Backend;
 using StartFMS_BackendAPI.Extensions;
 using StartFMS_BackendAPI.Line.WebAPI.Extensions.LineBots;
 using System.Text;
@@ -88,10 +88,10 @@ builder.Services
     });
 
 //設定參數
-var backend = new BackendContext() {
+var backend = new A00_BackendContext() {
     ConnectionString = config.GetValue<string>("ConnectionStrings:Default")
 };
-builder.Services.AddSingleton<BackendContext>(backend);
+builder.Services.AddSingleton<A00_BackendContext>(backend);
 
 var lineBots = new LineBots() {
     ChannelToken = config.GetValue<string>("Line:Bots:channelToken"),

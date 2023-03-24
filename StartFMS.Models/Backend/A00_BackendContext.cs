@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using StartFMS.Models.Backend;
 
-namespace StartFMS.Models
+namespace StartFMS.Models.Backend
 {
-    public partial class BackendContext : DbContext
+    public partial class A00_BackendContext : DbContext
     {
         public string ConnectionString { get; set; }
 
-        public BackendContext()
+        public A00_BackendContext()
         {
         }
 
-        public BackendContext(DbContextOptions<BackendContext> options)
+        public A00_BackendContext(DbContextOptions<A00_BackendContext> options)
             : base(options)
         {
         }
@@ -26,9 +25,10 @@ namespace StartFMS.Models
         public virtual DbSet<A00AccountUserToken> A00AccountUserTokens { get; set; } = null!;
         public virtual DbSet<A01AccountRole> A01AccountRoles { get; set; } = null!;
         public virtual DbSet<A01AccountRoleClaim> A01AccountRoleClaims { get; set; } = null!;
+        public virtual DbSet<B10LineMessageOption> B10LineMessageOptions { get; set; } = null!;
+        public virtual DbSet<B10LineMessageType> B10LineMessageTypes { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlServer(ConnectionString);
             //if (!optionsBuilder.IsConfigured)
             //{
@@ -133,6 +133,37 @@ namespace StartFMS.Models
                     .WithMany(p => p.A01AccountRoleClaims)
                     .HasForeignKey(d => d.RoleId)
                     .HasConstraintName("FK_AccountRoleClaims_AccountRoles_RoleId");
+            });
+
+            modelBuilder.Entity<B10LineMessageOption>(entity =>
+            {
+                entity.ToTable("B10_LineMessageOption");
+
+                entity.Property(e => e.Id).HasMaxLength(400);
+
+                entity.Property(e => e.IsUse)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("(N'false')");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(50)
+                    .HasColumnName("type")
+                    .HasDefaultValueSql("('')");
+            });
+
+            modelBuilder.Entity<B10LineMessageType>(entity =>
+            {
+                entity.HasKey(e => e.TypeId);
+
+                entity.ToTable("B10_LineMessageType");
+
+                entity.Property(e => e.TypeId).HasMaxLength(50);
+
+                entity.Property(e => e.TypeMemo)
+                    .HasMaxLength(100)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.TypeName).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);
