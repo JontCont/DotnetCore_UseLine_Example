@@ -44,6 +44,10 @@ public class LineBots {
         LINE_BOT.PushMessage(ADMIN_TOKEN_ID, message);
     }
 
+    public void PushMessage(TextMessage message) {
+        LINE_BOT.PushMessage(ADMIN_TOKEN_ID, message);
+    }
+
     public void PushMessage(string TokenId, string message) {
         LINE_BOT.PushMessage(TokenId, message);
     }

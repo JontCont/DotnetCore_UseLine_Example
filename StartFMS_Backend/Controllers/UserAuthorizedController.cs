@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using StartFMS.Models;
 using StartFMS.Models.Backend;
 using StartFMS_BackendAPI.Extensions;
 using System.Text.Json.Serialization;
@@ -35,13 +34,13 @@ public class userAuthenticationJwt {
 public class UserAuthorizedController : Controller {
 
     private readonly ILogger<UserAuthorizedController> _logger;
-    private readonly BackendContext _context;
+    private readonly A00_BackendContext _context;
 
     public UserAuthorizedController(
         ILogger<UserAuthorizedController> logger,
-        BackendContext backendContext) {
+        A00_BackendContext A00_BackendContext) {
         _logger = logger;
-        _context = backendContext;
+        _context = A00_BackendContext;
     }
 
     [HttpGet]

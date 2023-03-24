@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using StartFMS.Models.Backend;
 
-namespace StartFMS.Models
+namespace StartFMS.Models.Backend
 {
     public partial class BackendContext : DbContext
     {
-        public string ConnectionString { get; set; }
-
         public BackendContext()
         {
         }
@@ -26,14 +23,16 @@ namespace StartFMS.Models
         public virtual DbSet<A00AccountUserToken> A00AccountUserTokens { get; set; } = null!;
         public virtual DbSet<A01AccountRole> A01AccountRoles { get; set; } = null!;
         public virtual DbSet<A01AccountRoleClaim> A01AccountRoleClaims { get; set; } = null!;
+        public virtual DbSet<B10LineMessageOption> B10LineMessageOptions { get; set; } = null!;
+        public virtual DbSet<B10LineMessageType> B10LineMessageTypes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConnectionString);
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseSqlServer("Data Source=startfms.database.windows.net;Initial Catalog=StartFMS_Backend;Persist Security Info=True;User ID=Conte.Ma;Password=Sn22568656");
-            //}
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=startfms.database.windows.net;Initial Catalog=StartFMS_Backend;Persist Security Info=True;User ID=Conte.Ma;Password=Sn22568656");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -133,6 +132,39 @@ namespace StartFMS.Models
                     .WithMany(p => p.A01AccountRoleClaims)
                     .HasForeignKey(d => d.RoleId)
                     .HasConstraintName("FK_AccountRoleClaims_AccountRoles_RoleId");
+            });
+
+            modelBuilder.Entity<B10LineMessageOption>(entity =>
+            {
+                entity.ToTable("B10_LineMessageOption");
+
+                entity.Property(e => e.IsUse)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("(N'false')");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(50)
+                    .HasColumnName("type")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(400)
+                    .HasDefaultValueSql("('')");
+            });
+
+            modelBuilder.Entity<B10LineMessageType>(entity =>
+            {
+                entity.HasKey(e => e.TypeId);
+
+                entity.ToTable("B10_LineMessageType");
+
+                entity.Property(e => e.TypeId).HasMaxLength(50);
+
+                entity.Property(e => e.TypeMemo)
+                    .HasMaxLength(100)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.TypeName).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Backend\" />
     <Folder Include="Vender\" />
   </ItemGroup>
 
