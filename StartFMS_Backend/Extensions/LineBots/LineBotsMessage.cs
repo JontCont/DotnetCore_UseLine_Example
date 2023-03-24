@@ -46,12 +46,12 @@ public static class LineBotsMessage {
                 string text = lineEvent.message.text;
                 if (string.IsNullOrEmpty(text)) break;
 
-                if (text.Substring(0, 6).Equals("!reply")) {
-                    textMessage = new TextMessage($"您說的是 : {text.ToString().Replace("!喵說", "")}");
+                if (text.Substring(0, 7).Equals("!reply ")) {
+                    textMessage = new TextMessage($"您說的是 : {text.ToString().Replace("!reply ", "")}");
                 }
 
-                if (text.Substring(0,5).Equals("!chat")) {
-                    string Prompt = text.ToString().Replace("!chat", "");
+                if (text.Substring(0,6).Equals("!chat ")) {
+                    string Prompt = text.ToString().Replace("!chat ", "");
                     string Request = await ChatGPT.Chat.ResponseMessageAsync(Prompt);
                     textMessage = new TextMessage(Request);
                 }
