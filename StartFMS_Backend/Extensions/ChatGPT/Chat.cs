@@ -14,7 +14,7 @@ namespace StartFMS_BackendAPI.Line.WebAPI.Extensions.ChatGPT {
 
             var completionResult =  openAiService.Completions.CreateCompletionAsStream(new CompletionCreateRequest() {
                 Prompt = Prompt,
-                MaxTokens = 1000
+                MaxTokens = 4000
             }, Models.TextDavinciV3);
             
             string str = "";

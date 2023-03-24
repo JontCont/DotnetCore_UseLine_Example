@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using StartFMS.Models;
+using StartFMS.Models.Backend;
 using StartFMS_BackendAPI.Extensions;
 
 namespace StartFMS_BackendAPI.Controllers;
@@ -16,11 +16,11 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
-    private readonly BackendContext _backendContext;
+    private readonly A00_BackendContext _backendContext;
 
     public WeatherForecastController(
         ILogger<WeatherForecastController> logger,
-        BackendContext backendContext)
+        A00_BackendContext backendContext)
     {
         _logger = logger;
         _backendContext = backendContext;

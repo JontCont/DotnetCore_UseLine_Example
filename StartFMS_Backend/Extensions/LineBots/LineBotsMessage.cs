@@ -46,11 +46,12 @@ public static class LineBotsMessage {
                 string text = lineEvent.message.text;
                 if (string.IsNullOrEmpty(text)) break;
 
-                if (text.Substring(0, 7).Equals("!reply ")) {
+                if (text.Length > 7 && text.Substring(0, 7).Equals("!reply ")) {
                     textMessage = new TextMessage($"您說的是 : {text.ToString().Replace("!reply ", "")}");
                 }
 
-                if (text.Substring(0,6).Equals("!chat ")) {
+                if (text.Length > 6 && text.Substring(0, 6).Equals("!chat ")) {
+
                     string Prompt = text.ToString().Replace("!chat ", "");
                     string Request = await ChatGPT.Chat.ResponseMessageAsync(Prompt);
                     textMessage = new TextMessage(Request);
@@ -58,10 +59,18 @@ public static class LineBotsMessage {
 
                 break;
         }
-        if (!string.IsNullOrEmpty(textMessage.text)) {
+
+        if (!string.IsNullOrEmpty(textMessage.text) && textMessage.quickReply.items != null) {
+            bots.PushMessage(textMessage);
+        }
+        else {
             bots.ReplyMessage(textMessage.text);
         }
+
     }//ReplyBotsMessage()
+
+
+
 
 
 }//class
