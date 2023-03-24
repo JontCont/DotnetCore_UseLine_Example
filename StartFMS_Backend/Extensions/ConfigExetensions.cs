@@ -27,20 +27,20 @@ namespace StartFMS_BackendAPI.Extensions
                 .AddEnvironmentVariables();
 
             // 取得 Azure App Configuration 的連線字串
-            var connectionString = builder.Build()["ConnectionStrings:AppConfig"];
+            //var connectionString = builder.Build()["ConnectionStrings:AppConfig"];
 
-            if(connectionString != null) {
-                // 加入 Azure App Configuration 資料源
-                builder.AddAzureAppConfiguration(options =>
-                {
-                    options.Connect(connectionString)
-                        // 如果您想要只加載指定的鍵，可以使用 Select 方法，例如：
-                        //.Select(KeyFilter.AnyOf("MyApp:*"))
-                        .ConfigureKeyVault(kv => {
-                            kv.SetCredential(new DefaultAzureCredential());
-                        });
-                });
-            }
+            //if(connectionString != null) {
+            //    // 加入 Azure App Configuration 資料源
+            //    builder.AddAzureAppConfiguration(options =>
+            //    {
+            //        options.Connect(connectionString)
+            //            // 如果您想要只加載指定的鍵，可以使用 Select 方法，例如：
+            //            //.Select(KeyFilter.AnyOf("MyApp:*"))
+            //            .ConfigureKeyVault(kv => {
+            //                kv.SetCredential(new DefaultAzureCredential());
+            //            });
+            //    });
+            //}
             return builder.Build();
         }
 
