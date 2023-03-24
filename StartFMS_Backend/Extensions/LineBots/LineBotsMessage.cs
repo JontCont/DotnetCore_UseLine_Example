@@ -45,22 +45,35 @@ public static class LineBotsMessage {
             case "message":
                 string text = lineEvent.message.text;
                 if (string.IsNullOrEmpty(text)) break;
+                switch (text) {
+                    case "目錄":
+                        textMessage = new TextMessage($"請選擇下方選項 (請使用手機選擇)");
+                        textMessage.quickReply.items.Add(new QuickReplyMessageAction("開啟/關閉 ChatGPT 聊天", "開啟 ChatGPT 聊天"));
+                        textMessage.quickReply.items.Add(new QuickReplyMessageAction("開啟/關閉 模仿說話", "開啟 模仿說話"));
+                        break;
 
-                if (text.Substring(0, 7).Equals("!reply ")) {
-                    textMessage = new TextMessage($"您說的是 : {text.ToString().Replace("!reply ", "")}");
+                    default:
+                        if (text.Length > 7 && text.Substring(0, 7).Equals("!reply ")) {
+                            textMessage = new TextMessage($"您說的是 : {text.ToString().Replace("!reply ", "")}");
+                        }
+
+                        if (text.Length > 6 && text.Substring(0, 6).Equals("!chat ")) {
+                            string Prompt = text.ToString().Replace("!chat ", "");
+                            string Request = await ChatGPT.Chat.ResponseMessageAsync(Prompt);
+                            textMessage = new TextMessage(Request);
+                        }
+                        break;
                 }
-
-                if (text.Substring(0,6).Equals("!chat ")) {
-                    string Prompt = text.ToString().Replace("!chat ", "");
-                    string Request = await ChatGPT.Chat.ResponseMessageAsync(Prompt);
-                    textMessage = new TextMessage(Request);
-                }
-
                 break;
         }
-        if (!string.IsNullOrEmpty(textMessage.text)) {
+
+        if (!string.IsNullOrEmpty(textMessage.text) && textMessage.quickReply.items != null) {
+            bots.PushMessage(textMessage);
+        }
+        else {
             bots.ReplyMessage(textMessage.text);
         }
+
     }//ReplyBotsMessage()
 
 
