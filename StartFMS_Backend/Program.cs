@@ -87,6 +87,7 @@ builder.Services
         options.SlidingExpiration = true;
     });
 
+//設定參數
 var backend = new BackendContext() {
     ConnectionString = config.GetValue<string>("ConnectionStrings:Default")
 };
