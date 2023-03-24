@@ -51,6 +51,7 @@ public static class LineBotsMessage {
                 }
 
                 if (text.Length > 6 && text.Substring(0, 6).Equals("!chat ")) {
+
                     string Prompt = text.ToString().Replace("!chat ", "");
                     string Request = await ChatGPT.Chat.ResponseMessageAsync(Prompt);
                     textMessage = new TextMessage(Request);
