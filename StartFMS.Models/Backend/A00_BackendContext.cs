@@ -51,6 +51,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<A00AccountUserClaim>(entity => {
+
                 entity.ToTable("A00_AccountUserClaims");
 
                 entity.Property(e => e.UserId).HasMaxLength(450);
@@ -61,6 +62,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<A00AccountUserLogin>(entity => {
+
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
 
                 entity.ToTable("A00_AccountUserLogins");
@@ -77,6 +79,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<A00AccountUserRole>(entity => {
+
                 entity.HasKey(e => new { e.UserId, e.RoleId })
                     .HasName("PK_AccountUserRoles");
 
@@ -89,6 +92,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<A00AccountUserToken>(entity => {
+
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name })
                     .HasName("PK_AspNetUserTokens");
 
@@ -100,6 +104,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<A01AccountRole>(entity => {
+
                 entity.ToTable("A01_AccountRoles");
 
                 entity.Property(e => e.Name).HasMaxLength(256);
@@ -108,6 +113,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<A01AccountRoleClaim>(entity => {
+
                 entity.ToTable("A01_AccountRoleClaims");
 
                 entity.Property(e => e.RoleId).HasMaxLength(450);
@@ -119,6 +125,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<B10LineMessageOption>(entity => {
+
                 entity.ToTable("B10_LineMessageOption");
 
                 entity.Property(e => e.Id).HasMaxLength(400);
@@ -134,6 +141,7 @@ namespace StartFMS.Models.Backend {
             });
 
             modelBuilder.Entity<B10LineMessageType>(entity => {
+
                 entity.HasKey(e => e.TypeId);
 
                 entity.ToTable("B10_LineMessageType");
