@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace StartFMS.Models.Backend
-{
-    public partial class A00_BackendContext : DbContext
-    {
+namespace StartFMS.Models.Backend {
+    public partial class A00_BackendContext : DbContext {
         public string ConnectionString { get; set; }
 
-        public A00_BackendContext()
-        {
+        public A00_BackendContext() {
         }
 
         public A00_BackendContext(DbContextOptions<A00_BackendContext> options)
-            : base(options)
-        {
+            : base(options) {
         }
 
         public virtual DbSet<A00AccountUser> A00AccountUsers { get; set; } = null!;
@@ -29,17 +22,13 @@ namespace StartFMS.Models.Backend
         public virtual DbSet<B10LineMessageType> B10LineMessageTypes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseSqlServer(ConnectionString);
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseSqlServer("Data Source=startfms.database.windows.net;Initial Catalog=StartFMS_Backend;Persist Security Info=True;User ID=Conte.Ma;Password=Sn22568656");
-            //}
+            if (!optionsBuilder.IsConfigured) {
+                optionsBuilder.UseSqlServer(ConnectionString);
+            }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<A00AccountUser>(entity =>
-            {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<A00AccountUser>(entity => {
                 entity.ToTable("A00_AccountUsers");
 
                 entity.Property(e => e.Email).HasMaxLength(256);
@@ -61,8 +50,7 @@ namespace StartFMS.Models.Backend
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<A00AccountUserClaim>(entity =>
-            {
+            modelBuilder.Entity<A00AccountUserClaim>(entity => {
                 entity.ToTable("A00_AccountUserClaims");
 
                 entity.Property(e => e.UserId).HasMaxLength(450);
@@ -72,8 +60,7 @@ namespace StartFMS.Models.Backend
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<A00AccountUserLogin>(entity =>
-            {
+            modelBuilder.Entity<A00AccountUserLogin>(entity => {
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
 
                 entity.ToTable("A00_AccountUserLogins");
@@ -89,8 +76,7 @@ namespace StartFMS.Models.Backend
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<A00AccountUserRole>(entity =>
-            {
+            modelBuilder.Entity<A00AccountUserRole>(entity => {
                 entity.HasKey(e => new { e.UserId, e.RoleId })
                     .HasName("PK_AccountUserRoles");
 
@@ -102,8 +88,7 @@ namespace StartFMS.Models.Backend
                     .HasConstraintName("FK_AccountUserRoles_AccountRoles_RoleId");
             });
 
-            modelBuilder.Entity<A00AccountUserToken>(entity =>
-            {
+            modelBuilder.Entity<A00AccountUserToken>(entity => {
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name })
                     .HasName("PK_AspNetUserTokens");
 
@@ -114,8 +99,7 @@ namespace StartFMS.Models.Backend
                 entity.Property(e => e.Name).HasMaxLength(128);
             });
 
-            modelBuilder.Entity<A01AccountRole>(entity =>
-            {
+            modelBuilder.Entity<A01AccountRole>(entity => {
                 entity.ToTable("A01_AccountRoles");
 
                 entity.Property(e => e.Name).HasMaxLength(256);
@@ -123,8 +107,7 @@ namespace StartFMS.Models.Backend
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<A01AccountRoleClaim>(entity =>
-            {
+            modelBuilder.Entity<A01AccountRoleClaim>(entity => {
                 entity.ToTable("A01_AccountRoleClaims");
 
                 entity.Property(e => e.RoleId).HasMaxLength(450);
@@ -135,8 +118,7 @@ namespace StartFMS.Models.Backend
                     .HasConstraintName("FK_AccountRoleClaims_AccountRoles_RoleId");
             });
 
-            modelBuilder.Entity<B10LineMessageOption>(entity =>
-            {
+            modelBuilder.Entity<B10LineMessageOption>(entity => {
                 entity.ToTable("B10_LineMessageOption");
 
                 entity.Property(e => e.Id).HasMaxLength(400);
@@ -151,8 +133,7 @@ namespace StartFMS.Models.Backend
                     .HasDefaultValueSql("('')");
             });
 
-            modelBuilder.Entity<B10LineMessageType>(entity =>
-            {
+            modelBuilder.Entity<B10LineMessageType>(entity => {
                 entity.HasKey(e => e.TypeId);
 
                 entity.ToTable("B10_LineMessageType");
